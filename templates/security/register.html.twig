@@ -1,0 +1,9 @@
+{# templates/security/login/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+	Register
+
+
+	{{ form(form, {'action': path('register'), 'name': 'register'}) }}{% endblock %}

@@ -1,0 +1,13 @@
+{# admin/equipment/new.html.twig #}
+{{ form_start(form) }}
+
+
+
+{% if img is defined and img.pathname is not empty %}
+gg
+    <input type="file" src="{{ asset(img.pathname) }}" title="dd" alt="Current Image">
+{% endif %}
+{{ form_rest(form) }}
+
+
+{{ form_end(form) }}

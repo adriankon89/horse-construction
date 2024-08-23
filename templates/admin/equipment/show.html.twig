@@ -1,0 +1,15 @@
+{# admin/equipment/show.html.twig #}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+show
+
+{{ equipment.name }}
+{{ equipment.status.value }}
+ {# <img src="{{ asset('uploads/equipment/' ~ equipment.img)  }}">  #}
+
+

@@ -1,0 +1,14 @@
+{# admin/repair/show.html.twig #}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+show
+
+{{ repair.equipment.name }}
+{{ repair.createdAt|date('Y-m-d') }}
+
+

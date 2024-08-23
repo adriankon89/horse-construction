@@ -1,0 +1,36 @@
+{# admin/equipment/index.html.twig #}
+<table class="table-auto">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Dimension</th>
+            <th>Type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for equipment in elements %}
+            <tr>
+                <td>{{ equipment.name }}</td>
+                <td>{{ equipment.status.value }}</td>
+                <td>{{ equipment.dimension.value }}</td>
+                <td>{{ equipment.type ? equipment.type.value : ''  }}</td>
+                <td>
+                    <a href="{{ path('admin_equipment_show', {equipment: equipment.id}) }}">Detail</a>
+                    <a href="{{ path('admin_equipment_edit', {equipment: equipment.id}) }}">Edit</a>
+                    {% if equipment.canBePublished() %}
+                        
+                        <a href="{{ path('admin_equipment_publish', {equipment: equipment.id}) }}">Publish</a>
+                   
+                    {% endif %}
+
+                    {% if equipment.canRepair() %}
+                        <a href="{{ path('admin_repair_create', {equipment: equipment.id}) }}">Repair</a>
+                    {% endif %}
+
+                <td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

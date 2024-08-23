@@ -1,0 +1,28 @@
+{# admin/repair/index.html.twig #}
+<table class="table-auto">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Final price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rent in rents %}
+            <tr>
+                <td>{{ rent.equipment.name }}</td>
+                <td>{{ rent.price }} </td>
+                <td>{{ rent.discount }}</td>
+                <td>{{ rent.finalPrice }}</td>
+             
+                <td>
+      
+
+                </td>
+         
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

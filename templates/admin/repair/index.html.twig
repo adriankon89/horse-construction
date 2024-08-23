@@ -1,0 +1,29 @@
+{# admin/repair/index.html.twig #}
+<table class="table-auto">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Created at</th>
+            <th>Dimension</th>
+            <th>Type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for repair in repairs %}
+            <tr>
+                <td>{{ repair.equipment.name }}</td>
+                <td>{{ repair.createdAt|date('Y-m-d') }} </td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a href="{{ path('admin_repair_edit', {repair: repair.id}) }}">Edit</a>
+                    <a href="{{ path('admin_repair_show', {repair: repair.id}) }}">Detail</a>
+                    <a href="{{ path('admin_repair_delete', {repair: repair.id}) }}">Delete</a>
+
+                </td>
+         
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
