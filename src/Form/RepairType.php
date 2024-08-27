@@ -17,15 +17,15 @@ class RepairType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('start_repair_date', DateType::class, [
+            ->add('startRepairDate', DateType::class, [
                 'widget' => 'single_text',
                 'data' => $options['default_date']
             ])
-            ->add('end_repair_date', DateType::class, [
+            ->add('endRepairDate', DateType::class, [
                 'widget' => 'single_text',
                 'data' => $options['default_date']
             ])
-            ->add('actual_repair_date', DateType::class, [
+            ->add('actualRepairDate', DateType::class, [
                 'widget' => 'single_text',
                 'required' => false,
             ])

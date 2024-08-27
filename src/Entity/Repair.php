@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: RepairRepository::class)]
-//#[UniqueEntity(fields: ['equipment', 'start_repair_date'])]
+//#[UniqueEntity(fields: ['equipment', 'startRepairDate'])]
 #[ORM\HasLifecycleCallbacks]
 class Repair
 {
@@ -20,22 +20,22 @@ class Repair
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'start_repair_date')]
+    #[ORM\ManyToOne(targetEntity:Equipment::class, inversedBy: 'repairs')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
     private ?Equipment $equipment = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $start_repair_date = null;
+    private ?\DateTimeInterface $startRepairDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $end_repair_date = null;
+    private ?\DateTimeInterface $endRepairDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $actual_repair_date = null;
+    private ?\DateTimeInterface $actualRepairDate = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
     public function getId(): ?int
@@ -57,36 +57,36 @@ class Repair
 
     public function getStartRepairDate(): ?\DateTimeInterface
     {
-        return $this->start_repair_date;
+        return $this->startRepairDate;
     }
 
-    public function setStartRepairDate(\DateTimeInterface $start_repair_date): static
+    public function setStartRepairDate(\DateTimeInterface $startRepairDate): static
     {
-        $this->start_repair_date = $start_repair_date;
+        $this->startRepairDate = $startRepairDate;
 
         return $this;
     }
 
     public function getEndRepairDate(): ?\DateTimeInterface
     {
-        return $this->end_repair_date;
+        return $this->endRepairDate;
     }
 
-    public function setEndRepairDate(?\DateTimeInterface $end_repair_date): static
+    public function setEndRepairDate(?\DateTimeInterface $endRepairDate): static
     {
-        $this->end_repair_date = $end_repair_date;
+        $this->endRepairDate = $endRepairDate;
 
         return $this;
     }
 
     public function getActualRepairDate(): ?\DateTimeInterface
     {
-        return $this->actual_repair_date;
+        return $this->actualRepairDate;
     }
 
-    public function setActualRepairDate(?\DateTimeInterface $actual_repair_date): static
+    public function setActualRepairDate(?\DateTimeInterface $actualRepairDate): static
     {
-        $this->actual_repair_date = $actual_repair_date;
+        $this->actualRepairDate = $actualRepairDate;
 
         return $this;
     }
