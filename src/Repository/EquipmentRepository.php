@@ -29,7 +29,7 @@ class EquipmentRepository extends ServiceEntityRepository
             ->join('e.rents', 'r')
             ->where('e.id = :equipmentId')
             ->andWhere('e.status = :equipmentStatus')
-            ->andWhere('r.endRateDate > CURRENT_DATE()')
+            ->andWhere('r.endRentDate > CURRENT_DATE()')
             ->setParameter('equipmentId', $equipment->getId())
             ->setParameter('equipmentStatus', EquipmentStatus::PUBLISHED->value);
 

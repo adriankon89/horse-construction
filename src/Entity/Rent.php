@@ -27,7 +27,7 @@ class Rent
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\GreaterThanOrEqual(propertyPath: 'startRentDate')]
-    private ?\DateTimeInterface $endRateDate = null;
+    private ?\DateTimeInterface $endRentDate = null;
 
     #[ORM\Column(type: Types::INTEGER)]
     #[Assert\Positive]
@@ -73,14 +73,14 @@ class Rent
         return $this;
     }
 
-    public function getEndRateDate(): ?\DateTimeInterface
+    public function getendRentDate(): ?\DateTimeInterface
     {
-        return $this->endRateDate;
+        return $this->endRentDate;
     }
 
-    public function setEndRateDate(\DateTimeInterface $endRateDate): static
+    public function setendRentDate(\DateTimeInterface $endRentDate): static
     {
-        $this->endRateDate = $endRateDate;
+        $this->endRentDate = $endRentDate;
 
         return $this;
     }
@@ -102,7 +102,7 @@ class Rent
         return $this->discount;
     }
 
-    //TODO
+    //TODO none of type hint
     public function setDiscount($discount): static
     {
         $this->discount = $discount;

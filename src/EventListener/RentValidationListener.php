@@ -25,11 +25,10 @@ class RentValidationListener
     {
         $equipment = $rent->getEquipment();
         $startRentDate = $rent->getStartRentDate();
-        $endRentDate = $rent->getEndRateDate();
+        $endRentDate = $rent->getendRentDate();
 
         if (null !== $this->rentRepository->hasOverlappingRent($equipment, $startRentDate, $endRentDate)) {
             throw new RentIsOverlapException("The equipment is already rented for the specified period.");
         }
-        throw new RentIsOverlapException("tu weszło");
     }
 }

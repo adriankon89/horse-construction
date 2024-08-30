@@ -38,9 +38,9 @@ final class DefaultDiscountStrategyFactory implements DiscountStrategyFactoryInt
     private function isLongTermRental(): bool
     {
         $startRentDate = $this->rent->getStartRentDate();
-        $endRateDate = $this->rent->getEndRateDate();
+        $endRentDate = $this->rent->getendRentDate();
 
-        $interval = $startRentDate->diff($endRateDate);
+        $interval = $startRentDate->diff($endRentDate);
         $amountOfRentDays = $interval->format('%d');
 
         return $amountOfRentDays > self::LONG_TERM_THRESHOLD_DAYS;

@@ -25,7 +25,7 @@ class RentType extends AbstractType
                 'widget' => 'single_text',
                 'data' => $options['default_date'],
             ])
-            ->add('endRateDate', DateType::class, [
+            ->add('endRentDate', DateType::class, [
                 'widget' => 'single_text',
                 'data' => $options['default_date'],
             ])
