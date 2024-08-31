@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventListener;
 
 use App\Entity\Rent;
+use App\Exception\EquipmentShouldBeActiveException;
 use App\Exception\RentIsOverlapException;
 use App\Repository\RentRepository;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
@@ -29,6 +30,9 @@ class RentValidationListener
 
         if (null !== $this->rentRepository->hasOverlappingRent($equipment, $startRentDate, $endRentDate)) {
             throw new RentIsOverlapException("The equipment is already rented for the specified period.");
+        }
+        if(false === $equipment->isActive()) {
+            throw new EquipmentShouldBeActiveException('Equipment for renting needs to be active');
         }
     }
 }

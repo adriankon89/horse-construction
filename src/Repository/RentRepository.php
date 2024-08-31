@@ -20,22 +20,34 @@ class RentRepository extends ServiceEntityRepository
         parent::__construct($registry, Rent::class);
     }
 
-
     public function hasOverlappingRent(Equipment $equipment, DateTime $startRentDate, DateTime $endRentDate): ?Rent
     {
+
         return $this->createQueryBuilder("r")
         ->where('r.equipment = :equipment')
-        ->andWhere('r.startRentDate < :endRentDate')
-        ->andWhere('r.endRentDate > :startRentDate')
+        ->andWhere(
+            $this->createQueryBuilder('r')
+                ->expr()->orX(
+                    $this->createQueryBuilder('r')
+                        ->expr()->andX(
+                            'r.startRentDate < :endRentDate',
+                            'r.endRentDate > :startRentDate'
+                        ),
+                    $this->createQueryBuilder('r')
+                        ->expr()->andX(
+                            'r.startRentDate <= :startRentDate',
+                            'r.endRentDate >= :endRentDate'
+                        )
+                )
+        )
         ->setParameters(new ArrayCollection([
             new Parameter('equipment', $equipment),
             new Parameter('endRentDate', $endRentDate),
             new Parameter('startRentDate', $startRentDate),
-
         ]))
         ->getQuery()
+        ->setMaxResults(1)
         ->getOneOrNullResult();
-
     }
 
     //    /**

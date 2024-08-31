@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Equipment;
 use App\Entity\Rent;
 use App\Entity\User;
+use App\Enum\EquipmentStatus;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -52,6 +53,11 @@ class RentType extends AbstractType
             ->add('equipment', EntityType::class, [
                 'class' => Equipment::class,
                 'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $er): QueryBuilder {
+                    return $er->createQueryBuilder('e')
+                    ->where('e.status = :publishStatus')
+                    ->setParameter('publishStatus', EquipmentStatus::PUBLISHED->value);
+                },
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
