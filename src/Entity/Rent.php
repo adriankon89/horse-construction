@@ -23,6 +23,7 @@ class Rent
     private ?Equipment $equipment = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual('today')]
     private ?\DateTimeInterface $startRentDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -33,16 +34,22 @@ class Rent
     #[Assert\Positive]
     private ?int $price = null;
 
-    #[ORM\Column(nullable: true, type: Types::INTEGER)]
-    private ?int $discount = null;
+    #[ORM\Column(nullable: true, type: Types::INTEGER, options: ['default' => 0])]
+    private ?int $discount = 0;
 
     #[ORM\ManyToOne(inversedBy: 'rents')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(nullable: false, type: Types::INTEGER)]
     #[Assert\Positive]
     private ?int $finalPrice = null;
+
+    #[ORM\Column(nullable: false, type: Types::BOOLEAN, options: ['default' => false])]
+    private ?bool $transport = false;
+
+    #[ORM\Column(nullable: false, type: Types::BOOLEAN, options: ['default' => false])]
+    private ?bool $cleaning = false;
 
     public function getId(): ?int
     {
@@ -137,11 +144,35 @@ class Rent
     public function setInitialPrice(): void
     {
         $equipment =  $this->getEquipment();
-        if(null === $equipment) {
+        if (null === $equipment) {
             throw new \LogicException('Equipment is required to calculate initial price');
         }
         $equipmentPrice = $equipment->getPrice();
         $this->setFinalPrice($equipmentPrice);
         $this->setPrice($equipmentPrice);
+    }
+
+    public function isTransport(): ?bool
+    {
+        return $this->transport;
+    }
+
+    public function setTransport(bool $transport): static
+    {
+        $this->transport = $transport;
+
+        return $this;
+    }
+
+    public function isCleaning(): ?bool
+    {
+        return $this->cleaning;
+    }
+
+    public function setCleaning(bool $cleaning): static
+    {
+        $this->cleaning = $cleaning;
+
+        return $this;
     }
 }

@@ -25,14 +25,15 @@ class RentValidationListener
     public function prePersist(Rent $rent, LifecycleEventArgs $args): void
     {
         $equipment = $rent->getEquipment();
-        $startRentDate = $rent->getStartRentDate();
-        $endRentDate = $rent->getendRentDate();
 
-        if (null !== $this->rentRepository->hasOverlappingRent($equipment, $startRentDate, $endRentDate)) {
-            throw new RentIsOverlapException("The equipment is already rented for the specified period.");
-        }
         if(false === $equipment->isActive()) {
             throw new EquipmentShouldBeActiveException('Equipment for renting needs to be active');
+        }
+
+        $startRentDate = $rent->getStartRentDate();
+        $endRentDate = $rent->getendRentDate();
+        if (null !== $this->rentRepository->hasOverlappingRent($equipment, $startRentDate, $endRentDate)) {
+            throw new RentIsOverlapException("The equipment is already rented for the specified period.");
         }
     }
 }

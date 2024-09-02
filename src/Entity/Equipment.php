@@ -32,8 +32,8 @@ class Equipment
     #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[ORM\Column(length: 50)]
-    private ?EquipmentStatus $status = null;
+    #[ORM\Column(length: 50, options: ['default' => EquipmentStatus::DRAFT])]
+    private ?EquipmentStatus $status = EquipmentStatus::DRAFT;
 
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
@@ -255,8 +255,25 @@ class Equipment
 
     public function canRepair(): bool
     {
-        //if is not rented and if not draft
+        $rents = $this->getRents();
+        if(true === in_array($this->getStatus(), [EquipmentStatus::DRAFT, EquipmentStatus::REPAIR])) {
+            dd('status');
+            return false;
+        }
+        $today = new \DateTime();
+
+        foreach ($rents as $rent) {
+            dd('rents');
+            return false;
+        }
+
+
         return true;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->getStatus() === EquipmentStatus::PUBLISHED;
     }
 
     public function __toString(): string
