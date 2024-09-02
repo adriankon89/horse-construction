@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Rent;
 use App\Form\RentType;
 use App\Service\DiscountRentService;
+use App\Service\FinalPriceService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +33,11 @@ class RentController extends AbstractController
 
 
     #[Route('/create', name:'admin_rent_create', methods: ['GET', 'POST'])]
-    public function create(Request $request, DiscountRentService $discountRentService): Response
-    {
+    public function create(
+        Request $request,
+        DiscountRentService $discountRentService,
+        FinalPriceService $finalPriceService
+    ): Response {
         $rent = new Rent();
         $form = $this->createForm(RentType::class, $rent);
         $form->handleRequest($request);
@@ -42,6 +46,7 @@ class RentController extends AbstractController
             try {
                 $rent = $form->getData();
                 $discountRentService->calculateDiscount($rent);
+                $finalPriceService->calculateFinalPrice($rent);
                 //TODO REPOSITORY
                 $this->manager->persist($rent);
                 $this->manager->flush();

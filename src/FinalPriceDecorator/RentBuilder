@@ -1,0 +1,35 @@
+class RentBuilder
+{
+    private RentInterface $rent;
+
+    public function __construct(Rent $rent)
+    {
+        $this->rent = new BaseRent($rent);
+    }
+
+    public function addTransport(): self
+    {
+        $this->rent = new TransportDecorator($this->rent);
+        return $this;
+    }
+
+    public function addCleaning(): self
+    {
+        $this->rent = new CleaningDecorator($this->rent);
+        return $this;
+    }
+
+    public function getFinalRent(): RentInterface
+    {
+        return $this->rent;
+    }
+}
+
+// Usage
+$rentEntity = new Rent();
+// ... set costs ...
+
+$rentBuilder = new RentBuilder($rentEntity);
+$finalRent = $rentBuilder->addTransport()->addCleaning()->getFinalRent();
+
+echo $finalRent->calculatePrice(); // 130.0
