@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\AddonCostDecorator;
+namespace App\FinalPriceDecorator;
 
 use App\Entity\Rent;
 
