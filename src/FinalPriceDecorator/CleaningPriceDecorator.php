@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FinalPriceDecorator;
+namespace App\AddonCostDecorator;
 
-final class TransportPrice extends FinalPriceDecorator
+final class CleaningPriceDecorator extends AddonCostDecorator
 {
-    //TODO transportpricedecorator
     public function calculateFinalPrice(): int
     {
 
         $basePrice = $this->finalPrice->calculateFinalPrice();
-        return $basePrice + 5;
+        return $basePrice + 40;
     }
-
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\FinalPriceDecorator;
+namespace App\AddonCostDecorator;
 
 use App\Entity\Rent;
 
-abstract class FinalPriceDecorator implements FinalPriceInterface
+abstract class AddonCostDecorator implements FinalPriceInterface
 {
     public function __construct(protected FinalPriceInterface $finalPrice)
     {
