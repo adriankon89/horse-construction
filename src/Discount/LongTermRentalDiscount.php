@@ -11,7 +11,6 @@ final class LongTermRentalDiscount implements DiscountStrategyInterface
 {
     public const DISCOUNT_AMOUNT = 100;
 
-
     public function calculate(Rent $rent): void
     {
         $rentPrice = $rent->getPrice();
@@ -19,7 +18,7 @@ final class LongTermRentalDiscount implements DiscountStrategyInterface
         $priceValueObject = new Price($finalPrice);
 
         $rent->setDiscount(self::DISCOUNT_AMOUNT);
-        $rent->setFinalPrice($$priceValueObject->getPrice);
+        $rent->setFinalPrice($priceValueObject->getPrice());
     }
 
     public function handle(Rent $rent): void

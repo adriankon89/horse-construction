@@ -9,7 +9,7 @@ use App\ValueObject\Price;
 
 final class LargestDimensionDiscount implements DiscountStrategyInterface
 {
-    public const DISCOUNT_AMOUNT = 10;
+    public const int DISCOUNT_AMOUNT = 10;
 
     public function calculate(Rent $rent): void
     {
@@ -18,7 +18,7 @@ final class LargestDimensionDiscount implements DiscountStrategyInterface
         $priceValueObject = new Price($finalPrice);
 
         $rent->setDiscount(self::DISCOUNT_AMOUNT);
-        $rent->setFinalPrice($$priceValueObject->getPrice);
+        $rent->setFinalPrice($priceValueObject->getPrice());
     }
 
     public function handle(Rent $rent): void
