@@ -23,7 +23,41 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%equipment_directory%'
-  
+    App\Entity\Rent:
+        public: false
+    # Rent final price register decorators        
+    App\Decorator\Rent\FinalPrice\TransportDecorator:
+        arguments:
+             $finalPrice: '@App\Decorator\Rent\FinalPrice\BaseFinalPrice'
+        public: false
+        tags:
+            - { name: 'app.final_price_decorator' }
+   
+    App\Decorator\Rent\FinalPrice\CleaningDecorator:
+        arguments:
+             $finalPrice: '@App\Decorator\Rent\FinalPrice\BaseFinalPrice'
+        public: false
+        tags:
+            - { name: 'app.final_price_decorator' }
+
+    App\Decorator\Rent\FinalPrice\InsuranceDecorator:
+        arguments:
+             $finalPrice: '@App\Decorator\Rent\FinalPrice\BaseFinalPrice'
+        public: false
+        tags:
+            - { name: 'app.final_price_decorator' }        
+    
+    App\Factory\Rent\DecoratorRegistry:
+        arguments:
+            $decoratorIds: !tagged app.final_price_decorator
+        public: true
+
+    App\Factory\Rent\FinalPriceDecoratorFactory:
+        arguments:
+            $decoratorRegistry: '@App\Factory\Rent\DecoratorRegistry'
+        public: true
+
+    
                 
 
                   

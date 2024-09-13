@@ -15,15 +15,15 @@ final class DefaultDiscountStrategyFactory implements DiscountStrategyFactoryInt
     public function createStrategy(Rent $rent): ?DiscountStrategyInterface
     {
         $this->rent = $rent;
-        if(true === $this->isFirstUserRent()) {
+        if (true === $this->isFirstUserRent()) {
             return new FirstRentDiscount();
         }
 
-        if(true === $this->isLongTermRental()) {
+        if (true === $this->isLongTermRental()) {
             return new LongTermRentalDiscount();
         }
 
-        if(true == $this->isRentForLargestDimension()) {
+        if (true == $this->isRentForLargestDimension()) {
             return new LargestDimensionDiscount();
         }
 
@@ -38,7 +38,7 @@ final class DefaultDiscountStrategyFactory implements DiscountStrategyFactoryInt
     private function isLongTermRental(): bool
     {
         $startRentDate = $this->rent->getStartRentDate();
-        $endRentDate = $this->rent->getendRentDate();
+        $endRentDate = $this->rent->getEndRentDate();
 
         $interval = $startRentDate->diff($endRentDate);
         $amountOfRentDays = $interval->format('%d');

@@ -30,26 +30,29 @@ class Rent
     #[Assert\GreaterThanOrEqual(propertyPath: 'startRentDate')]
     private ?\DateTimeInterface $endRentDate = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(nullable: false, type: Types::INTEGER, options:['default' => 0])]
     #[Assert\Positive]
-    private ?int $price = null;
+    private int $price = 1;
 
-    #[ORM\Column(nullable: true, type: Types::INTEGER, options: ['default' => 0])]
-    private ?int $discount = 0;
+    #[ORM\Column(nullable: false, type: Types::INTEGER, options: ['default' => 0])]
+    private int $discount = 0;
 
     #[ORM\ManyToOne(inversedBy: 'rents')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column(nullable: false, type: Types::INTEGER)]
+    #[ORM\Column(nullable: false, type: Types::INTEGER, options: ['default' => 0])]
     #[Assert\Positive]
-    private ?int $finalPrice = null;
+    private int $finalPrice = 0;
 
     #[ORM\Column(nullable: false, type: Types::BOOLEAN, options: ['default' => false])]
     private ?bool $transport = false;
 
     #[ORM\Column(nullable: false, type: Types::BOOLEAN, options: ['default' => false])]
     private ?bool $cleaning = false;
+
+    #[ORM\Column(nullable: false, type: Types::BOOLEAN, options: ['default' => false])]
+    private ?bool $installation = null;
 
     public function getId(): ?int
     {
@@ -80,7 +83,7 @@ class Rent
         return $this;
     }
 
-    public function getendRentDate(): ?\DateTimeInterface
+    public function getEndRentDate(): ?\DateTimeInterface
     {
         return $this->endRentDate;
     }
@@ -172,6 +175,18 @@ class Rent
     public function setCleaning(bool $cleaning): static
     {
         $this->cleaning = $cleaning;
+
+        return $this;
+    }
+
+    public function isInstallation(): ?bool
+    {
+        return $this->installation;
+    }
+
+    public function setInstallation(bool $installation): static
+    {
+        $this->installation = $installation;
 
         return $this;
     }

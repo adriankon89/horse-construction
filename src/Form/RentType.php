@@ -51,8 +51,18 @@ class RentType extends AbstractType
                 'disabled' => true,
             ]
             )
-            ->add('transport', CheckboxType::class)
-            ->add('cleaning', CheckboxType::class)
+            ->add('transport', CheckboxType::class, [
+                'required' => false,
+                'value' => 0,
+            ])
+            ->add('cleaning', CheckboxType::class, [
+                'required' => false,
+                'value' => 0,
+            ])
+            ->add('installation', CheckboxType::class, [
+                'required' => false,
+                'value' => 0,
+            ])
             ->add('equipment', EntityType::class, [
                 'class' => Equipment::class,
                 'choice_label' => 'name',

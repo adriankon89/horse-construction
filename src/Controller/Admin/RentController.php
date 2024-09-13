@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\DTO\RentAddOnsDto;
 use App\Entity\Rent;
 use App\Form\RentType;
 use App\Service\DiscountRentService;
@@ -10,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('admin/rent')]
@@ -36,17 +38,24 @@ class RentController extends AbstractController
     public function create(
         Request $request,
         DiscountRentService $discountRentService,
-        FinalPriceService $finalPriceService
+        FinalPriceService $finalPriceService,
     ): Response {
         $rent = new Rent();
         $form = $this->createForm(RentType::class, $rent);
+        $form->remove('price');
+        $form->remove('final_price');
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $rentAddsOnDto = RentAddOnsDto::fromEntity($rent);
                 $rent = $form->getData();
+
                 $discountRentService->calculateDiscount($rent);
-                $finalPriceService->calculateFinalPrice($rent);
+                $finalPrice = $finalPriceService->calculateFinalPrice($rent, $rentAddsOnDto);
+                $rent->setFinalPrice($finalPrice);
+
                 //TODO REPOSITORY
                 $this->manager->persist($rent);
                 $this->manager->flush();

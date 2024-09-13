@@ -53,6 +53,7 @@ final class EquipmentFixtures extends Fixture
             $equipment->setType(EquipmentType::Dehumidifier);
             $equipment->setStatus(EquipmentStatus::PUBLISHED);
             $this->manager->persist($equipment);
+            //TODO setStatus should be private or removed? I should change a status only by some bussines action
             $equipment->setStatus(EquipmentStatus::PUBLISHED);
 
         }

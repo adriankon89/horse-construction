@@ -26,12 +26,12 @@ class RentValidationListener
     {
         $equipment = $rent->getEquipment();
 
-        if(false === $equipment->isActive()) {
+        if (false === $equipment->isActive()) {
             throw new EquipmentShouldBeActiveException('Equipment for renting needs to be active');
         }
 
         $startRentDate = $rent->getStartRentDate();
-        $endRentDate = $rent->getendRentDate();
+        $endRentDate = $rent->getEndRentDate();
         if (null !== $this->rentRepository->hasOverlappingRent($equipment, $startRentDate, $endRentDate)) {
             throw new RentIsOverlapException("The equipment is already rented for the specified period.");
         }

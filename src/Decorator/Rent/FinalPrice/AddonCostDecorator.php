@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\FinalPriceDecorator;
+namespace App\Decorator\Rent\FinalPrice;
 
+use App\DTO\RentAddOnsDto;
 use App\Entity\Rent;
 
 abstract class AddonCostDecorator implements FinalPriceInterface
@@ -13,6 +14,8 @@ abstract class AddonCostDecorator implements FinalPriceInterface
     }
 
     abstract public function calculateFinalPrice(): int;
+
+    abstract public function handle(RentAddOnsDto $rentAddOnsDto): bool;
 
     public function getRent(): Rent
     {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FinalPriceDecorator;
+namespace App\Decorator\Rent\FinalPrice;
 
 class SetupAndInstallationDecorator extends AddonCostDecorator
 {
@@ -10,6 +10,11 @@ class SetupAndInstallationDecorator extends AddonCostDecorator
     {
         $basePrice = $this->finalPrice->calculateFinalPrice();
         return $basePrice + 20;
+    }
+
+    public function handle(\App\DTO\RentAddOnsDto $rentAddOnsDto): bool
+    {
+        return true;
     }
 
 }

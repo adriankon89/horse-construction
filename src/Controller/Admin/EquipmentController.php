@@ -65,6 +65,7 @@ final class EquipmentController extends AbstractController
     #[Route('/show/{equipment}', name: 'admin_equipment_show', methods:['GET'])]
     public function show(Equipment $equipment): Response
     {
+        dd($equipment->canRepair());
         return $this->render('admin/equipment/show.html.twig', [
             'equipment' => $equipment
         ]);
