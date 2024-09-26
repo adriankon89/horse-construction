@@ -1,2 +1,2 @@
 # horse-construction
-It's a journal of my way how I learn Symfony
+It's a project to learn how to use a Symfony framework
